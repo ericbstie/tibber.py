@@ -36,7 +36,7 @@ class QueryExecutor:
     async def __ainit__(self, session):
         self.session = session or await self.gql_client.connect_async()
         asyncio_atexit.register(self.gql_client.close_async)
-    
+
     async def _ensure_connected(self):
         """Ensure the client is connected before executing queries."""
         if self.session is None:

@@ -30,7 +30,7 @@ class Account(QueryExecutor):
         self._token: str = token
         self.user_agent = user_agent
 
-        super().__init__(transport_kwargs=transport_kwargs)
+        super().__init__(transport_kwargs=transport_kwargs, connect_on_init=immediate_update)
 
         if immediate_update:
             self.fetch_all()

@@ -17,8 +17,9 @@ _logger = logging.getLogger(__name__)
 class QueryExecutor:
     """A class for executing queries."""
 
-    def __init__(self, session=None, transport_kwargs={}):
+    def __init__(self, session=None, transport_kwargs={}, connect_on_init=True):
         self.gql_client = None
+        self.session = None
         transport = AIOHTTPTransport(
             url=API_ENDPOINT,
             headers={"Authorization": "Bearer " + self.token},
@@ -26,14 +27,21 @@ class QueryExecutor:
             **transport_kwargs,
         )
         self.gql_client = gql.Client(
-            transport=transport, fetch_schema_from_transport=True
+            transport=transport, fetch_schema_from_transport=False
         )
 
-        asyncio.run(self.__ainit__(session))
+        if connect_on_init:
+            asyncio.run(self.__ainit__(session))
 
     async def __ainit__(self, session):
         self.session = session or await self.gql_client.connect_async()
         asyncio_atexit.register(self.gql_client.close_async)
+    
+    async def _ensure_connected(self):
+        """Ensure the client is connected before executing queries."""
+        if self.session is None:
+            self.session = await self.gql_client.connect_async()
+            asyncio_atexit.register(self.gql_client.close_async)
 
     def execute_query(
         self, access_token: str, query: str, max_tries: int = 1, **kwargs
@@ -89,6 +97,7 @@ class QueryExecutor:
         return result
 
     async def execute_async_single(self, access_token: str, query: str):
+        await self._ensure_connected()
         try:
             result = await self.gql_client.execute_async(gql.gql(query))
         except TransportQueryError as e:

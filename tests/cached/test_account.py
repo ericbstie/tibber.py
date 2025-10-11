@@ -24,7 +24,7 @@ def test_getting_user_id(account):
     assert account.user_id == "dcc2355e-6f55-45c2-beb9-274241fe450c"
 
 def test_getting_account_type(account):
-    assert account.account_type == ["tibber", "customer"]
+    assert account.account_type == ["customer"]
     
 def test_getting_homes(account):
     assert len(account.homes) == 1

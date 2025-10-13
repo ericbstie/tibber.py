@@ -13,7 +13,7 @@ setup(
     long_description_content_type='text/markdown',
     packages=["tibber", "tibber.networking", "tibber.exceptions", "tibber.types"],
     install_requires=[
-        "gql>=3.4.0",
+        "gql==3.5.3",
         "gql[aiohttp]>=3.4.0",
         "gql[websockets]>=3.4.0",
         "graphql-core>=3.2.3",

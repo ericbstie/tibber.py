@@ -1,15 +1,13 @@
 from __future__ import annotations
 
 """A class representing the Subscription type from the GraphQL Tibber API."""
-from typing import TYPE_CHECKING
-from typing import Optional
+from typing import TYPE_CHECKING, Optional
 
 from tibber.networking.query_builder import QueryBuilder
 from tibber.types.legal_entity import LegalEntity
 from tibber.types.price_info import PriceInfo
 from tibber.types.price_rating import PriceRating
-from tibber.types.subscription_price_connection import \
-    SubscriptionPriceConnection
+from tibber.types.subscription_price_connection import SubscriptionPriceConnection
 
 # Import type checking modules
 if TYPE_CHECKING:

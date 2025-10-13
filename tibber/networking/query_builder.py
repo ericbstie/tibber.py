@@ -284,6 +284,30 @@ class QueryBuilder:
         return {f"home({home_id})": QueryBuilder.home()}
 
     @classmethod
+    def price_info_range_query(
+        cls, resolution: str, first: int, last: int, before: str, after: str
+    ):
+        first_arg = f"first: {first}" if first else None
+        last_arg = f"last: {last}" if last else None
+        before_arg = f'before: "{before}"' if before else None
+        after_arg = f'after: "{after}"' if after else None
+
+        args = ", ".join(
+            [
+                arg
+                for arg in [first_arg, last_arg, before_arg, after_arg]
+                if arg is not None
+            ]
+        )
+        return {
+            f"priceInfoRange(resolution: {resolution}, {args})": {
+                "pageInfo": QueryBuilder.subscription_price_connection_page_info(),
+                "edges": QueryBuilder.subscription_price_edge(),
+                "nodes": QueryBuilder.price(),
+            }
+        }
+
+    @classmethod
     def range_query(
         cls, resolution: str, first: int, last: int, before: str, after: str
     ):

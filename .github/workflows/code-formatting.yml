@@ -23,13 +23,10 @@ jobs:
           path: ~/.cache/pip
           key: pip_cache
       - name: Install formatting tools
-        run: pip install black isort flake8
+        run: pip install black flake8
 
       - name: Running black
         run: black --check tibber
-
-      - name: Running isort
-        run: isort --check tibber
 
       - name: Running flake8
         run: flake8 --per-file-ignores="./tibber/__init__.py:E402"

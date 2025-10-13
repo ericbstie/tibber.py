@@ -151,3 +151,22 @@ def when_to_stop(data):
 # If a user agent was not defined earlier, this will be required here
 home.start_live_feed(user_agent = "UserAgent/0.0.1", exit_condition = when_to_stop)
 ```
+
+### Getting quarter hourly price information
+
+```python
+import tibber
+
+account = tibber.Account(tibber.DEMO_TOKEN)
+subscription = account.homes[0].current_subscription
+
+# The API requires the date to be passed as a base64 encoded string with timezone information
+date = datetime.datetime(2025, 1, 1, 0, 0, 0)
+encoded_date = base64.b64encode(date.astimezone().isoformat().encode("utf-8")).decode("utf-8")
+
+# QUARTER_HOURLY, HOURLY or DAILY
+connection = subscription.fetch_price_info_range("QUARTER_HOURLY", first=10, after=encoded_date)
+
+connection.nodes  # A list of Price objects
+```
+

@@ -26,7 +26,7 @@ jobs:
           key: pip_cache
       - name: Install depencency
         run: |
-          pip install gql gql[aiohttp] gql[websockets] graphql-core asyncio-atexit pytest pytest-timeout
+          pip install gql==3.5.2 gql[aiohttp] gql[websockets] graphql-core asyncio-atexit pytest pytest-timeout
       - name: Pytest
         run: |
           python -m pytest tests

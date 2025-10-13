@@ -24,7 +24,7 @@ jobs:
           key: pip_cache
       - name: Install depencency
         run: |
-          pip install gql gql[aiohttp] gql[websockets] graphql-core asyncio-atexit pytest pytest-cov
+          pip install gql==3.5.2 gql[aiohttp] gql[websockets] graphql-core asyncio-atexit pytest pytest-cov
       - name: Pytest
         run: |
           python -m pytest --cov=tibber tests/ --cov-report xml:coverage.xml

@@ -2,10 +2,14 @@ from __future__ import annotations
 
 """A class representing the Subscription type from the GraphQL Tibber API."""
 from typing import TYPE_CHECKING
+from typing import Optional
 
+from tibber.networking.query_builder import QueryBuilder
 from tibber.types.legal_entity import LegalEntity
 from tibber.types.price_info import PriceInfo
 from tibber.types.price_rating import PriceRating
+from tibber.types.subscription_price_connection import \
+    SubscriptionPriceConnection
 
 # Import type checking modules
 if TYPE_CHECKING:
@@ -47,6 +51,42 @@ class Subscription:
     def price_info(self) -> PriceInfo:
         """Price information related to the subscription"""
         return PriceInfo(self.cache.get("priceInfo"), self.tibber_client)
+
+    def fetch_price_info_range(
+        self,
+        resolution: str,
+        first: Optional[str] = None,
+        last: Optional[str] = None,
+        before: Optional[str] = None,
+        after: Optional[str] = None,
+        home_id: Optional[str] = None,
+    ) -> PriceInfo:
+        """Fetch PriceInfo for a given range.
+
+        The before and after arguments are Base64 encoded ISO 8601 datetimes."""
+        price_info_range_query_dict = QueryBuilder.price_info_range_query(
+            resolution, first, last, before, after
+        )
+
+        price_info_range_query = QueryBuilder.create_query(
+            "viewer", "homes", "currentSubscription", price_info_range_query_dict
+        )
+        full_data = self.tibber_client.execute_query(
+            self.tibber_client.token, price_info_range_query
+        )
+
+        home = full_data["viewer"]["homes"][0]
+        if home_id:
+            home_of_id = [
+                home for home in full_data["viewer"]["homes"] if home["id"] == home_id
+            ][0]
+
+            if home_of_id:
+                home = home_of_id
+
+        return SubscriptionPriceConnection(
+            home["currentSubscription"]["priceInfoRange"], self.tibber_client
+        )
 
     @property
     def price_rating(self) -> PriceRating:

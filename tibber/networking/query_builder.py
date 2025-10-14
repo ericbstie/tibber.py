@@ -200,7 +200,7 @@ class QueryBuilder:
             "validFrom": "",
             "validTo": "",
             "status": "",
-            "priceInfo": QueryBuilder.price_info(),
+            "priceInfo(resolution: QUARTER_HOURLY)": QueryBuilder.price_info(),
             "priceRating": QueryBuilder.price_rating(),
         }
 

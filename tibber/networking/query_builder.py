@@ -1,4 +1,5 @@
 """A class for generating GraphQL queries to send to the Tibber API"""
+from typing import Literal
 
 
 class QueryBuilder:
@@ -306,6 +307,17 @@ class QueryBuilder:
                 "nodes": QueryBuilder.price(),
             }
         }
+
+    @classmethod
+    def price_info_query(cls, resolution: Literal["HOURLY", "QUARTER_HOURLY"]):
+        return {
+            f"priceInfo(resolution: {resolution})": {
+                "current": QueryBuilder.price(),
+                "today": QueryBuilder.price(),
+                "tomorrow": QueryBuilder.price(),
+            }
+        }
+
 
     @classmethod
     def range_query(

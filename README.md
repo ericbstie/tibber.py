@@ -170,3 +170,17 @@ connection = subscription.fetch_price_info_range("QUARTER_HOURLY", first=10, aft
 connection.nodes  # A list of Price objects
 ```
 
+### Getting today or tomorrows quarter hourly price information
+
+```python
+import tibber
+
+account = tibber.Account(tibber.DEMO_TOKEN)
+subscription = account.homes[0].current_subscription
+
+# QUARTER_HOURLY or HOURLY
+price_info = subscription.fetch_price_info("QUARTER_HOURLY")
+
+price_info.today  # List of 96 Price objects
+price_info.tomorrow  # This data is populated once a day
+```

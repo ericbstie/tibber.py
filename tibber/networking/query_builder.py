@@ -1,4 +1,5 @@
 """A class for generating GraphQL queries to send to the Tibber API"""
+
 from typing import Literal
 
 
@@ -317,7 +318,6 @@ class QueryBuilder:
                 "tomorrow": QueryBuilder.price(),
             }
         }
-
 
     @classmethod
     def range_query(

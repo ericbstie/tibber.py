@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 """A class representing the Subscription type from the GraphQL Tibber API."""
-from typing import TYPE_CHECKING, Optional, Literal
+from typing import TYPE_CHECKING, Literal, Optional
 
 from tibber.networking.query_builder import QueryBuilder
 from tibber.types.legal_entity import LegalEntity
@@ -50,9 +50,10 @@ class Subscription:
         """Price information related to the subscription"""
         return PriceInfo(self.cache.get("priceInfo"), self.tibber_client)
 
-    def fetch_price_info(self,
+    def fetch_price_info(
+        self,
         resolution: Literal["HOURLY", "QUARTER_HOURLY"],
-        home_id: Optional[str] = None
+        home_id: Optional[str] = None,
     ) -> PriceInfo:
         price_info_query_dict = QueryBuilder.price_info_query(resolution)
 

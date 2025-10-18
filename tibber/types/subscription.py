@@ -83,7 +83,7 @@ class Subscription:
         before: Optional[str] = None,
         after: Optional[str] = None,
         home_id: Optional[str] = None,
-    ) -> PriceInfo:
+    ) -> SubscriptionPriceConnection:
         """Fetch PriceInfo for a given range.
 
         The before and after arguments are Base64 encoded ISO 8601 datetimes."""

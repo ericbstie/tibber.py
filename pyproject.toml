@@ -1,0 +1,38 @@
+[project]
+name = "tibber.py"
+version = "0.7.1"
+description = "A python wrapper for the Tibber API."
+readme = "README.md"
+license = "MIT"
+authors = [
+    { name = "Eric Bieszczad-Stie", email = "ericbieszczad@gmail.com" }
+]
+requires-python = ">=3.9.0"
+dependencies = [
+    "gql==3.5.3",
+    "gql[aiohttp]>=3.4.0",
+    "gql[websockets]>=3.4.0",
+    "graphql-core>=3.2.3",
+    "backoff>=2.2.1",
+    "asyncio-atexit>=1.0.1",
+]
+classifiers = [
+    "Development Status :: 1 - Planning",
+    "Intended Audience :: Developers",
+    "Natural Language :: English",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Topic :: Documentation :: Sphinx",
+    "Topic :: Home Automation",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+
+[project.urls]
+Documentation = "https://tibberpy.readthedocs.io/en/latest/"
+
+[build-system]
+requires = ["uv_build>=0.10.9,<0.11.0"]
+build-backend = "uv_build"
+
+[tool.uv.build-backend]
+module-name = "tibber"

@@ -1,20 +1,19 @@
 ---
-name: Feature request
-about: Suggest an idea for this project
-title: "[FEATURE] "
-labels: enhancement
-assignees: ''
-
+name: New feature
+about: Suggest a change or a new feature
+labels: feature
 ---
+## Description
 
-## Is your feature request related to a problem? Please describe.
-A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
 
-## Describe the solution you'd like
-A clear and concise description of what you want to happen.
+## Code example / syntax
 
-## Describe alternatives you've considered
-A clear and concise description of any alternative solutions or features you've considered.
+```py
+import tibber
 
-## Additional context
-Add any other context or screenshots about the feature request here.
+
+account = tibber.Account(tibber.DEMO_TOKEN)
+home = account.homes[0]
+
+# ...
+```

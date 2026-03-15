@@ -18,7 +18,7 @@ docs (located on the right side of the Tibber API explorer).
 ![](https://img.shields.io/pypi/dw/tibber.py)
 ![](https://img.shields.io/github/contributors-anon/BeatsuDev/tibber.py) <-- You can be here ❗❗
 
-[![Pytest Python 3.7 / 3.11](https://github.com/BeatsuDev/tibber.py/actions/workflows/pytests.yml/badge.svg)](https://github.com/BeatsuDev/tibber.py/actions/workflows/pytests.yml)
+[![Pytest Python 3.9 / 3.13](https://github.com/BeatsuDev/tibber.py/actions/workflows/pytests.yml/badge.svg)](https://github.com/BeatsuDev/tibber.py/actions/workflows/pytests.yml)
 ![Publish to PyPi status](https://github.com/BeatsuDev/tibber.py/actions/workflows/publish-to-pypi.yml/badge.svg)
 
 Do you want to ask a question, report an issue, or even showcase your project that uses tibber.py? 🤩<br>Find out where to post by [checking out this overview](https://github.com/BeatsuDev/tibber.py/discussions/46).
@@ -33,7 +33,7 @@ python -m pip install tibber.py
 
 ### Requirements
 
-tibber.py depends on `gql`, `gql[aiohttp]`, `gql[websockets]` and `graphql-core`. tibber.py supports Python versions 3.7 and up!
+tibber.py depends on `gql`, `gql[aiohttp]`, `gql[websockets]` and `graphql-core`. tibber.py supports Python versions 3.9 and up!
 
 ## Examples
 
@@ -48,7 +48,7 @@ account = tibber.Account(tibber.DEMO_TOKEN) # Log in with an access token. All i
 # (but rather the data as it was when it last was cached)
 print(account.name)         # "Arya Stark"
 print(account.user_id)      # "dcc2355e-6f55-45c2-beb9-274241fe450c"
-print(account.account_type) # ["tibber", "customer"]
+print(account.account_type) # ["customer"]
 print(account.login)        # "arya@winterfell.com"
 
 # To update the cache with new data straight from the tibber api, run this:
@@ -66,11 +66,11 @@ import tibber
 account = tibber.Account(tibber.DEMO_TOKEN)
 home = account.homes[0]
 
-print(home.id)                     # "cc83e83e-8cbf-4595-9bf7-c3cf192f7d9c"
+print(home.id)                     # "96a14971-525a-4420-aae9-e5aedaa129ff"
 print(home.time_zone)              # "Europe/Stockholm"
 print(home.app_nickname)           # "Vitahuset"
-print(home.app_avatar)             # "FLOORHOUSE3"
-print(home.size)                   # 195
+print(home.app_avatar)             # "FLOORHOUSE2"
+print(home.size)                   # 200
 print(home.type)                   # "HOUSE"
 print(home.number_of_residents)    # 5
 print(home.primary_heating_source) # "GROUND"
@@ -156,6 +156,8 @@ home.start_live_feed(user_agent = "UserAgent/0.0.1", exit_condition = when_to_st
 
 ```python
 import tibber
+import datetime
+import base64
 
 account = tibber.Account(tibber.DEMO_TOKEN)
 subscription = account.homes[0].current_subscription

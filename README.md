@@ -18,8 +18,8 @@ docs (located on the right side of the Tibber API explorer).
 ![](https://img.shields.io/pypi/dw/tibber.py)
 ![](https://img.shields.io/github/contributors-anon/BeatsuDev/tibber.py) <-- You can be here ❗❗
 
-[![Pytest Python 3.9 / 3.13](https://github.com/BeatsuDev/tibber.py/actions/workflows/pytests.yml/badge.svg)](https://github.com/BeatsuDev/tibber.py/actions/workflows/pytests.yml)
-![Publish to PyPi status](https://github.com/BeatsuDev/tibber.py/actions/workflows/publish-to-pypi.yml/badge.svg)
+[![CI](https://github.com/BeatsuDev/tibber.py/actions/workflows/code-quality.yml/badge.svg)](https://github.com/BeatsuDev/tibber.py/actions/workflows/code-quality.yml)
+![Publish to PyPi status](https://github.com/BeatsuDev/tibber.py/actions/workflows/release.yml/badge.svg)
 
 Do you want to ask a question, report an issue, or even showcase your project that uses tibber.py? 🤩<br>Find out where to post by [checking out this overview](https://github.com/BeatsuDev/tibber.py/discussions/46).
 

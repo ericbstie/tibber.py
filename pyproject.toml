@@ -42,4 +42,5 @@ dev = [
     "black>=25.11.0",
     "flake8>=7.3.0",
     "pytest>=8.4.2",
+    "pytest-cov>=7.0.0",
 ]

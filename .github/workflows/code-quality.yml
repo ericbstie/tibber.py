@@ -27,9 +27,9 @@ jobs:
       - name: Install formatting tools
         run: uv sync --only-dev
       - name: Running black
-        run: uv run -- black --check tibber
+        run: uv run -- black --check src/tibber
       - name: Running flake8
-        run: uv run -- flake8 --per-file-ignores="./tibber/__init__.py:E402"
+        run: uv run -- flake8 --per-file-ignores="./src/tibber/__init__.py:E402"
       - name: Minimize uv cache
         run: uv cache prune --ci
   tests:
@@ -66,7 +66,7 @@ jobs:
       - name: Minimize uv cache
         run: uv cache prune --ci
   coverage:
-    name: Pytest
+    name: Coverage
     runs-on: ubuntu-latest
     env:
       UV_CACHE_DIR: /tmp/.uv-cache
@@ -87,7 +87,7 @@ jobs:
       - name: Install formatting tools
         run: uv sync
       - name: Coverage
-        run: uv run -- pytest --cov=tibber tests/ --cov-report xml:coverage.xml
+        run: uv run -- pytest --cov=src/tibber tests/ --cov-report xml:coverage.xml
       - name: Upload to codecov
         run: |
           curl -Os https://uploader.codecov.io/v0.1.0_4653/linux/codecov

@@ -35,6 +35,19 @@ python -m pip install tibber.py
 
 tibber.py depends on `gql`, `gql[aiohttp]`, `gql[websockets]` and `graphql-core`. tibber.py supports Python versions 3.9 and up!
 
+## Development
+
+Development uses [uv](https://docs.astral.sh/uv/):
+
+```bash
+uv sync             # set up the environment
+uv run pytest       # run the tests
+uv run ruff check src  # lint
+uv run ruff format  # format
+```
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for the full guide.
+
 ## Examples
 
 ### Getting basic account data

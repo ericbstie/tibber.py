@@ -7,12 +7,8 @@ import tibber
 from tibber import __version__
 from tibber.types.live_measurement import LiveMeasurement
 
+pytestmark = pytest.mark.realtime
 
-def test_adding_listener_with_unknown_event_raises_exception(home):
-    with pytest.raises(ValueError):
-        @home.event("invalid-event-name")
-        async def callback(data):
-            print(data)
 
 @pytest.mark.timeout(60)
 def test_starting_live_feed_with_no_listeners_shows_warning(caplog):

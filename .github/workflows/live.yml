@@ -1,0 +1,27 @@
+name: Live API tests
+
+# Runs the network-dependent part of the test suite (markers "live" and "realtime")
+# against the real Tibber demo API, to catch upstream API changes without making
+# regular CI flaky. Failures here indicate API drift, not broken PRs.
+on:
+  schedule:
+    - cron: "0 6 * * 1" # every Monday morning
+  workflow_dispatch:
+
+jobs:
+  live-tests:
+    runs-on: ubuntu-latest
+    env:
+      UV_CACHE_DIR: /tmp/.uv-cache
+    steps:
+      - uses: actions/checkout@v6
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
+      - name: Install Python
+        run: uv python install
+      - name: Install dependencies
+        run: uv sync
+      - name: Run live and realtime tests against the demo API
+        run: uv run -- pytest -m "live or realtime" tests
+      - name: Minimize uv cache
+        run: uv cache prune --ci

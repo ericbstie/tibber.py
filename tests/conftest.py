@@ -1,7 +1,9 @@
+import json
+
 import pytest
 
 import tibber
-import json
+
 
 @pytest.fixture(scope="session")
 def account():
@@ -18,9 +20,12 @@ def account():
 
     return account
 
+
 @pytest.fixture(scope="session")
 def home(account):
     try:
         return account.homes[0]
     except IndexError:
-        raise ValueError("The instanciated demo account does not have any homes. Cannot perform home tests.")
+        raise ValueError(
+            "The instanciated demo account does not have any homes. Cannot perform home tests."
+        )

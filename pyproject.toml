@@ -45,4 +45,6 @@ dev = [
 ]
 
 [tool.ruff.lint]
+# I = isort: keep imports sorted; formatting itself is handled by `ruff format`.
+extend-select = ["I"]
 ignore = ["E402"]

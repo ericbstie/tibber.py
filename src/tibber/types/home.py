@@ -337,8 +337,9 @@ class TibberHome(NonDecoratedTibberHome):
                 )
             ),
             jitter=backoff.full_jitter,
-            giveup=lambda e: isinstance(e, TransportQueryError)
-            or isinstance(e, ValueError),
+            giveup=lambda e: (
+                isinstance(e, TransportQueryError) or isinstance(e, ValueError)
+            ),
         )
 
         retry_subscribe = backoff.on_exception(
@@ -352,8 +353,9 @@ class TibberHome(NonDecoratedTibberHome):
                 )
             ),
             jitter=backoff.full_jitter,
-            giveup=lambda e: isinstance(e, TransportQueryError)
-            or isinstance(e, ValueError),
+            giveup=lambda e: (
+                isinstance(e, TransportQueryError) or isinstance(e, ValueError)
+            ),
         )
 
         _logger.debug("connecting to websocket")

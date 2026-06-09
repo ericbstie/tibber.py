@@ -1,10 +1,4 @@
 """Tests for fetching production data from the API."""
-from datetime import datetime
-from datetime import timedelta
-
-import pytest
-
-import tibber
 
 
 # DISABLED in version 0.1.1 because the demo account has no power production...
@@ -12,12 +6,12 @@ import tibber
 # def test_production_page_info(home):
 #     home_production_connection = home.fetch_production("HOURLY", first=10, after="MjAyMi0wNi0xNFQxMzowMDowMC4wMDArMDI6MDA=")
 #     page_info = home_production_connection.page_info
-    
+
 #     assert page_info.end_cursor == home_production_connection.edges[-1].cursor
 #     assert page_info.has_next_page
 #     assert page_info.has_previous_page
 #     assert page_info.start_cursor == home_production_connection.edges[0].cursor
-    
+
 #     assert page_info.count == 10
 #     assert page_info.currency == "NOK"
 #     assert page_info.total_profit == 0.73834817

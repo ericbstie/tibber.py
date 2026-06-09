@@ -17,12 +17,12 @@
 
 # -- Project information -----------------------------------------------------
 
-project = 'tibber.py'
-copyright = '2025, Eric Bieszczad-Stie'
-author = 'Eric Bieszczad-Stie'
+project = "tibber.py"
+copyright = "2025, Eric Bieszczad-Stie"
+author = "Eric Bieszczad-Stie"
 
 # The full version, including alpha/beta/rc tags
-release = '0.5.0'
+release = "0.5.0"
 
 
 # -- General configuration ---------------------------------------------------
@@ -31,14 +31,14 @@ release = '0.5.0'
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    'sphinx_rtd_theme',  # For the readthedocs theam
+    "sphinx_rtd_theme",  # For the readthedocs theam
     "sphinx.ext.autodoc",  # For auto generating docs from docstrings
     "sphinx_autodoc_typehints",  # For using type hints to autogenerate argument type documentation
-    "sphinx.ext.autosectionlabel"  # For referencing other headers within the same file
+    "sphinx.ext.autosectionlabel",  # For referencing other headers within the same file
 ]
 
 # Add any paths that contain templates here, relative to this directory.
-templates_path = ['_templates']
+templates_path = ["_templates"]
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.

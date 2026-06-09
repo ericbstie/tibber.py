@@ -14,10 +14,16 @@ jobs:
 
     steps:
       - uses: actions/checkout@v6
-      - uses: astral-sh/ruff-action@v3
+      - name: Lint and check import sorting
+        uses: astral-sh/ruff-action@v3
         with:
           args: check
           src: "./src"
+      - name: Check formatting
+        uses: astral-sh/ruff-action@v3
+        with:
+          args: format --check
+          src: "."
   tests:
     name: Pytest
     runs-on: ubuntu-latest

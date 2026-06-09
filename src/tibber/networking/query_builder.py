@@ -526,7 +526,7 @@ class QueryBuilder:
             sendPushNotification(input: {{
                 title: "{title}",
                 message: "{message}",
-                {'screenToOpen: ' + screen_to_open if screen_to_open else ""}
+                {"screenToOpen: " + screen_to_open if screen_to_open else ""}
             }}) {{
                 successful
                 pushedToNumberOfDevices

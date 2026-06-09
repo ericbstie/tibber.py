@@ -12,16 +12,16 @@ type, should be accessed in the tibber.py package as: `Home.size` and return an 
 also supported). The docstrings of the `tibber.types` correspond to the description of each type in the api explorer
 docs (located on the right side of the Tibber API explorer).
 
-![MIT license badge](https://img.shields.io/github/license/BeatsuDev/tibber.py)
-![Code Coverage](https://img.shields.io/codecov/c/github/BeatsuDev/tibber.py)
+![MIT license badge](https://img.shields.io/github/license/ericbstie/tibber.py)
+![Code Coverage](https://img.shields.io/codecov/c/github/ericbstie/tibber.py)
 [![PyPI version](https://badge.fury.io/py/tibber.py.svg)](https://badge.fury.io/py/tibber.py)
 ![](https://img.shields.io/pypi/dw/tibber.py)
-![](https://img.shields.io/github/contributors-anon/BeatsuDev/tibber.py) <-- You can be here ❗❗
+![](https://img.shields.io/github/contributors-anon/ericbstie/tibber.py) <-- You can be here ❗❗
 
-[![CI](https://github.com/BeatsuDev/tibber.py/actions/workflows/code-quality.yml/badge.svg)](https://github.com/BeatsuDev/tibber.py/actions/workflows/code-quality.yml)
-![Publish to PyPi status](https://github.com/BeatsuDev/tibber.py/actions/workflows/release.yml/badge.svg)
+[![CI](https://github.com/ericbstie/tibber.py/actions/workflows/code-quality.yml/badge.svg)](https://github.com/ericbstie/tibber.py/actions/workflows/code-quality.yml)
+![Publish to PyPi status](https://github.com/ericbstie/tibber.py/actions/workflows/release.yml/badge.svg)
 
-Do you want to ask a question, report an issue, or even showcase your project that uses tibber.py? 🤩<br>Find out where to post by [checking out this overview](https://github.com/BeatsuDev/tibber.py/discussions/46).
+Do you want to ask a question, report an issue, or even showcase your project that uses tibber.py? 🤩<br>Find out where to post by [checking out this overview](https://github.com/ericbstie/tibber.py/discussions/46).
 
 ## Installation
 

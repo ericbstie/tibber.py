@@ -6,6 +6,8 @@ from datetime import timedelta
 
 import pytest
 
+pytestmark = pytest.mark.live
+
 import tibber
 
 

@@ -7,10 +7,6 @@ from tibber.types import Viewer
 from tibber.exceptions import UnauthenticatedException
 
 
-@pytest.fixture
-def unfetched_account():
-    return tibber.Account(tibber.DEMO_TOKEN, immediate_update=False)
-
 def test_getting_viewer(account):
     assert isinstance(account.viewer, Viewer)
 

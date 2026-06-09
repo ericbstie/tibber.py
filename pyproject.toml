@@ -41,8 +41,26 @@ module-name = "tibber"
 dev = [
     "pytest>=8.4.2",
     "pytest-cov>=7.0.0",
+    "pytest-timeout>=2.3.1",
     "ruff>=0.15.6",
 ]
 
 [tool.ruff.lint]
 ignore = ["E402"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+# The default suite is fully offline and deterministic. Network-dependent tests are
+# opt-in: run them with `pytest -m "live or realtime"` (see .github/workflows/live.yml).
+addopts = "--strict-markers -m 'not live and not realtime'"
+markers = [
+    "live: queries the real Tibber demo API over the network (deselected by default)",
+    "realtime: opens a websocket to the live measurement API (deselected by default)",
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "if TYPE_CHECKING:",
+]
+fail_under = 75

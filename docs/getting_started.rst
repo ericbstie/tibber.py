@@ -38,9 +38,9 @@ in the form of a list. Let's get the first home in the list!
 
 .. code-block:: python
 
-   print(account.homes)  # [<Home: Home 1>, <Home: Home 2>, ...]
+   print(account.homes)  # [<tibber.types.home.TibberHome object at 0x...>]
    home = account.homes[0]
-   print(home)  # <Home: Home 1>
+   print(home.app_nickname)  # "Vitahuset"
 
 
 #############################################
@@ -55,10 +55,10 @@ Since we're fetching data from the API and not just getting it from the cache, w
 .. code-block:: python
 
    consumption = home.fetch_consumption(resolution = "HOURLY", last = 24)  # last 24 hours
-   print(consumption)  # <HomeConsumptionConnection: HomeConsumptionConnection>
+   print(consumption)  # <tibber.types.home_consumption_connection.HomeConsumptionConnection object at 0x...>
 
 Back in the API explorer documentation, clicking the yellow underlined text "HomeConsumptionConnection" we see that it has a
-"nodes" attribute wich has a list of consumptions. Within the Consumption type you have all the goodies such as cost,
+"nodes" attribute which has a list of consumptions. Within the Consumption type you have all the goodies such as cost,
 unit price, currency etc. Let's print the cost of the last 24 hours!
 
 .. code-block:: python
@@ -90,6 +90,54 @@ account as the one you have generated your access token with.
 
    account = tibber.Account("your token")
    account.send_push_notification("My title", "Hello! I'm a message!")
+
+.. note::
+   Push notifications cannot be sent with the demo token. The API will
+   respond with "operation not allowed for demo user". Use an access
+   token generated for your own account instead.
+
+#########################
+Getting price information
+#########################
+
+The current subscription of a home holds price information. You can fetch
+today's (and, after they are published, tomorrow's) prices with the
+``fetch_price_info()`` method. It takes the resolution as an argument,
+which can be either ``QUARTER_HOURLY`` or ``HOURLY``.
+
+.. code-block:: python
+
+   import tibber
+
+   account = tibber.Account("your token")
+   subscription = account.homes[0].current_subscription
+
+   price_info = subscription.fetch_price_info("QUARTER_HOURLY")
+
+   print(price_info.today)     # A list of 96 Price objects
+   print(price_info.tomorrow)  # This data is populated once a day
+
+To get historical prices, use the ``fetch_price_info_range()`` method. It
+supports the ``QUARTER_HOURLY``, ``HOURLY`` and ``DAILY`` resolutions. The
+API requires the date to be passed as a base64 encoded ISO 8601 datetime
+with timezone information.
+
+.. code-block:: python
+
+   import tibber
+   import datetime
+   import base64
+
+   account = tibber.Account("your token")
+   subscription = account.homes[0].current_subscription
+
+   date = datetime.datetime(2025, 1, 1, 0, 0, 0)
+   encoded_date = base64.b64encode(date.astimezone().isoformat().encode("utf-8")).decode("utf-8")
+
+   connection = subscription.fetch_price_info_range("HOURLY", first=10, after=encoded_date)
+
+   for price in connection.nodes:
+      print(price.starts_at, price.total, price.currency)
 
 #################
 Live measurements
@@ -143,24 +191,27 @@ will be stopped (and code execution will continue).
       print(data.power)
 
    # Now start retrieving live measurements
-   home.start_live_feed(user_agent="program/1.0", exit_condition = lambda: True)  # This will stop the live feed after the first measurement
+   home.start_live_feed(user_agent="program/1.0", exit_condition = lambda data: True)  # This will stop the live feed after the first measurement
+
+The exit condition function receives the latest LiveMeasurement as its only
+argument, so you can stop the live feed based on the data it contains.
 
 .. code-block:: python
-   
-      import tibber
-   
-      account = tibber.Account("your token")
-      home = account.homes[0]
-   
-      @home.event("live_measurement")  # register the following function to run when the live_measurement event is emitted
-      async def process_data(data):  # Note the data parameter in the function. This is required and is of type LiveMeasurement.
-         print(data.power)
 
-      def my_exit_function(live_measurement_data):
-         return live_measurement_data.power > 1000:
-   
-      # Now start retrieving live measurements
-      home.start_live_feed(user_agent="program/1.0", exit_condition = my_exit_function)  # This will stop the live feed when the power is above 1000
-      print("We made it! The power is above 1000!")
+   import tibber
 
-For more examples, check out the `README <https://github.com/BeatsuDev/tibber.py>`_ of the project on GitHub.
+   account = tibber.Account("your token")
+   home = account.homes[0]
+
+   @home.event("live_measurement")  # register the following function to run when the live_measurement event is emitted
+   async def process_data(data):  # Note the data parameter in the function. This is required and is of type LiveMeasurement.
+      print(data.power)
+
+   def my_exit_function(live_measurement_data):
+      return live_measurement_data.power > 1000
+
+   # Now start retrieving live measurements
+   home.start_live_feed(user_agent="program/1.0", exit_condition = my_exit_function)  # This will stop the live feed when the power is above 1000
+   print("We made it! The power is above 1000!")
+
+For more examples, check out the `README <https://github.com/ericbstie/tibber.py>`_ of the project on GitHub.

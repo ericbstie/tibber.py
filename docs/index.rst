@@ -26,11 +26,11 @@ Welcome to tibber.py's documentation!
    close correlation to the Tibber API is explained further in the Introduction
    section).
 
-`tibber.py <https://github.com/BeatsuDev/tibber.py>`_ is an unofficial 
+`tibber.py <https://github.com/ericbstie/tibber.py>`_ is an unofficial
 `wrapper library <https://en.wikipedia.org/wiki/Wrapper_library>`_ for the
-`Tibber API <https://developer.tibber.com/>`_ developed and maintained by BeatsuDev.
-To quickly get started with common operations with the tibber.py library, 
-you can head over to the `GitHub repo <https://github.com/BeatsuDev/tibber.py>`_
+`Tibber API <https://developer.tibber.com/>`_.
+To quickly get started with common operations with the tibber.py library,
+you can head over to the `GitHub repo <https://github.com/ericbstie/tibber.py>`_
 and read the README.md file. There you can also see the source code of the library.
 
 ############
@@ -69,7 +69,7 @@ it's properties and methods.
 ####################################
 How to contribute or report an issue
 ####################################
-To report an issue or bug, go to the `GitHub repository <https://github.com/BeatsuDev/tibber.py>`_
+To report an issue or bug, go to the `GitHub repository <https://github.com/ericbstie/tibber.py>`_
 and create a new issue describing your problem and how to reproduce it. Also
 include what the *expected* behaviour was, and what the actual behaviour was.
 

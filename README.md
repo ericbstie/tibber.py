@@ -33,7 +33,7 @@ python -m pip install tibber.py
 
 ### Requirements
 
-tibber.py depends on `gql`, `gql[aiohttp]`, `gql[websockets]` and `graphql-core`. tibber.py supports Python versions 3.9 and up!
+tibber.py depends on `gql`, `gql[aiohttp]`, `gql[websockets]`, `graphql-core`, `backoff` and `asyncio-atexit`. tibber.py supports Python versions 3.9 and up!
 
 ## Examples
 
@@ -69,7 +69,7 @@ home = account.homes[0]
 print(home.id)                     # "96a14971-525a-4420-aae9-e5aedaa129ff"
 print(home.time_zone)              # "Europe/Stockholm"
 print(home.app_nickname)           # "Vitahuset"
-print(home.app_avatar)             # "FLOORHOUSE2"
+print(home.app_avatar)             # "CASTLE"
 print(home.size)                   # 200
 print(home.type)                   # "HOUSE"
 print(home.number_of_residents)    # 5
@@ -127,7 +127,7 @@ connection.nodes  # A list of Price objects
 ### Reading live measurements
 
 Note how you can register multiple callbacks for the same event. These will be run
-in asynchronously (at the same time)!
+asynchronously (at the same time)!
 
 ```python
 import tibber

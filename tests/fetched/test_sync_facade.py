@@ -1,5 +1,6 @@
 """Tests that the sync API is a thin facade over the async core and works
 from any calling context, including inside a running event loop (issue #65)."""
+
 import asyncio
 
 import tibber
@@ -23,6 +24,7 @@ def test_sync_fetch_works_inside_a_running_event_loop(home):
 
 def test_sync_fetch_price_info_works_inside_a_running_event_loop(home):
     """The exact scenario reported in issue #65."""
+
     async def main():
         return home.current_subscription.fetch_price_info("HOURLY")
 

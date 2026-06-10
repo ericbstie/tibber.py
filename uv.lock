@@ -191,15 +191,6 @@ wheels = [
 ]
 
 [[package]]
-name = "asyncio-atexit"
-version = "1.0.1"
-source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/22/d3/dd2974be3f67c7ec96e0d6ab454429d0372cb7c7bffa3d0ac67a483cb801/asyncio-atexit-1.0.1.tar.gz", hash = "sha256:1d0c71544b8ee2c484d322844ee72c0875dde6f250c0ed5b6993592ab9f7d436", size = 4373, upload-time = "2022-04-26T08:54:16.998Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/65/10/d6abaefa57a52646651fd0383c056280b0853c0106229ece6bb38cd14463/asyncio_atexit-1.0.1-py3-none-any.whl", hash = "sha256:d93d5f7d5633a534abd521ce2896ed0fbe8de170bb1e65ec871d1c20eac9d376", size = 3752, upload-time = "2022-04-26T08:54:15.726Z" },
-]
-
-[[package]]
 name = "attrs"
 version = "25.4.0"
 source = { registry = "https://pypi.org/simple" }
@@ -1087,7 +1078,6 @@ name = "tibber-py"
 version = "0.7.1"
 source = { editable = "." }
 dependencies = [
-    { name = "asyncio-atexit" },
     { name = "backoff" },
     { name = "gql", extra = ["aiohttp", "websockets"] },
     { name = "graphql-core" },
@@ -1103,7 +1093,6 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "asyncio-atexit", specifier = ">=1.0.1" },
     { name = "backoff", specifier = ">=2.2.1" },
     { name = "gql", specifier = "==3.5.3" },
     { name = "gql", extras = ["aiohttp"], specifier = ">=3.4.0" },

@@ -1,7 +1,8 @@
 import asyncio
+import atexit
 import logging
+import threading
 
-import asyncio_atexit
 import backoff
 import gql
 import websockets
@@ -15,7 +16,13 @@ _logger = logging.getLogger(__name__)
 
 
 class QueryExecutor:
-    """A class for executing queries."""
+    """A class for executing queries.
+
+    The async core runs on a dedicated event loop in a background thread.
+    The sync methods are a thin facade that submit work to that loop, so
+    they are safe to call from any context - including inside a running
+    event loop.
+    """
 
     def __init__(self, session=None, transport_kwargs={}):
         self.gql_client = None
@@ -29,11 +36,37 @@ class QueryExecutor:
             transport=transport, fetch_schema_from_transport=True
         )
 
-        asyncio.run(self.__ainit__(session))
+        self._loop = asyncio.new_event_loop()
+        self._loop_thread = threading.Thread(
+            target=self._loop.run_forever, name="tibber-query-executor", daemon=True
+        )
+        self._loop_thread.start()
+        atexit.register(self._shutdown)
+
+        self._run_coroutine_threadsafe(self.__ainit__(session))
 
     async def __ainit__(self, session):
         self.session = session or await self.gql_client.connect_async()
-        asyncio_atexit.register(self.gql_client.close_async)
+
+    def _run_coroutine_threadsafe(self, coroutine):
+        """Runs a coroutine on the executor's event loop and waits for the result."""
+        if threading.current_thread() is self._loop_thread:
+            # Blocking on the executor loop from its own thread would deadlock.
+            raise RuntimeError(
+                "The sync API cannot be used from the executor's event loop."
+                " Use the async API (e.g. execute_async or update_async) instead."
+            )
+        return asyncio.run_coroutine_threadsafe(coroutine, self._loop).result()
+
+    def _shutdown(self):
+        if self._loop.is_closed():
+            return
+        try:
+            self._run_coroutine_threadsafe(self.gql_client.close_async())
+        finally:
+            self._loop.call_soon_threadsafe(self._loop.stop)
+            self._loop_thread.join(timeout=5)
+            self._loop.close()
 
     def execute_query(
         self, access_token: str, query: str, max_tries: int = 1, **kwargs
@@ -45,20 +78,9 @@ class QueryExecutor:
         :param max_tries: The amount of attempts before giving up. Set to None for infinite tries.
         :param **kwargs: Arguments to be passed in to the backoff.on_exception decorator
         """
-        # To allow invocations from async contexts, check if a loop is running and attempt
-        # to schedule the execute_async method there. If no loop is found or the loop is not
-        # running, asyncio.run can be run instead.
-        try:
-            loop = asyncio.get_running_loop()
-        except RuntimeError:
-            loop = None
-
-        if loop and loop.is_running():
-            return loop.run_until_complete(
-                self.execute_async(access_token, query, max_tries, **kwargs)
-            )
-
-        return asyncio.run(self.execute_async(access_token, query, max_tries, **kwargs))
+        return self._run_coroutine_threadsafe(
+            self._execute_with_backoff(access_token, query, max_tries, **kwargs)
+        )
 
     async def execute_async(
         self, access_token: str, query: str, max_tries: int = 1, **kwargs
@@ -70,6 +92,15 @@ class QueryExecutor:
         :param max_tries: The amount of attempts before giving up. Set to None for infinite tries.
         :param **kwargs: Arguments to be passed in to the backoff.on_exception decorator
         """
+        future = asyncio.run_coroutine_threadsafe(
+            self._execute_with_backoff(access_token, query, max_tries, **kwargs),
+            self._loop,
+        )
+        return await asyncio.wrap_future(future)
+
+    async def _execute_with_backoff(
+        self, access_token: str, query: str, max_tries: int = 1, **kwargs
+    ):
         backoff_execution = backoff.on_exception(
             backoff.expo,
             (
@@ -90,7 +121,7 @@ class QueryExecutor:
 
     async def execute_async_single(self, access_token: str, query: str):
         try:
-            result = await self.gql_client.execute_async(gql.gql(query))
+            result = await self.session.execute(gql.gql(query))
         except TransportQueryError as e:
             for error in e.errors:
                 self._process_error(error)

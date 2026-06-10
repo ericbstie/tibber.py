@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 """A class representing the PriceInfo type from the GraphQL Tibber API."""
+import warnings
 from typing import TYPE_CHECKING, Optional
 
 from tibber.networking.query_builder import QueryBuilder
@@ -50,16 +51,30 @@ class PriceInfo:
     ) -> SubscriptionPriceConnection:
         """Fetch the price range.
 
+        .. deprecated::
+            The underlying `PriceInfo.range` field is deprecated by the Tibber API
+            (moved to `Subscription.priceInfoRange` with the introduction of
+            quarter hourly prices on October 1st, 2025). Use
+            `Subscription.fetch_price_info_range` instead.
+
         The before and after arguments are Base64 encoded ISO 8601 datetimes."""
-        range_query_dict = QueryBuilder.range_query(
+        warnings.warn(
+            "PriceInfo.fetch_range is deprecated because the Tibber API deprecated "
+            "the underlying PriceInfo.range field. "
+            "Use Subscription.fetch_price_info_range instead.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
+
+        price_info_range_query_dict = QueryBuilder.price_info_range_query(
             resolution, first, last, before, after
         )
 
-        range_query = QueryBuilder.create_query(
-            "viewer", "homes", "currentSubscription", "priceInfo", range_query_dict
+        price_info_range_query = QueryBuilder.create_query(
+            "viewer", "homes", "currentSubscription", price_info_range_query_dict
         )
         full_data = self.tibber_client.execute_query(
-            self.tibber_client.token, range_query
+            self.tibber_client.token, price_info_range_query
         )
 
         home = full_data["viewer"]["homes"][0]
@@ -72,5 +87,5 @@ class PriceInfo:
                 home = home_of_id
 
         return SubscriptionPriceConnection(
-            home["currentSubscription"]["priceInfo"]["range"], self.tibber_client
+            home["currentSubscription"]["priceInfoRange"], self.tibber_client
         )

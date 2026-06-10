@@ -112,14 +112,14 @@ import base64
 
 
 account = tibber.Account(tibber.DEMO_TOKEN)
-price_info = account.homes[0].current_subscription.price_info
+subscription = account.homes[0].current_subscription
 
 # The API requires the date to be passed as a base64 encoded string with timezone information
 date = datetime.datetime(2025, 1, 1, 0, 0, 0)
 encoded_date = base64.b64encode(date.astimezone().isoformat().encode("utf-8")).decode("utf-8")
 
-# Only HOURLY and DAILY
-connection = price_info.fetch_range("HOURLY", first=10, after=encoded_date)
+# QUARTER_HOURLY, HOURLY or DAILY
+connection = subscription.fetch_price_info_range("HOURLY", first=10, after=encoded_date)
 
 connection.nodes  # A list of Price objects
 ```

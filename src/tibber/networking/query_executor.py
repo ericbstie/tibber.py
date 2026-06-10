@@ -72,10 +72,10 @@ class QueryExecutor:
         """
         backoff_execution = backoff.on_exception(
             backoff.expo,
-            [
+            (
                 gql.transport.exceptions.TransportClosed,
                 websockets.exceptions.ConnectionClosedError,
-            ],
+            ),
             max_tries=max_tries,
             max_time=100,
             jitter=backoff.full_jitter,

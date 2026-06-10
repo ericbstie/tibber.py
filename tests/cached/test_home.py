@@ -38,7 +38,7 @@ def test_getting_primary_heating_source(home):
 
 
 def test_getting_has_ventilation_system(home):
-    assert home.has_ventilation_system == False
+    assert not home.has_ventilation_system
 
 
 def test_getting_main_fuse_size(home):

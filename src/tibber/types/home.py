@@ -325,10 +325,10 @@ class TibberHome(NonDecoratedTibberHome):
 
         retry_connect = backoff.on_exception(
             backoff.expo,
-            [
+            (
                 gql.transport.exceptions.TransportClosed,
                 websockets.exceptions.ConnectionClosedError,
-            ],
+            ),
             max_value=100,
             max_tries=retries,
             on_backoff=lambda details: _logger.warning(

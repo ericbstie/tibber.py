@@ -14,7 +14,6 @@ dependencies = [
     "gql[websockets]>=3.4.0",
     "graphql-core>=3.2.3",
     "backoff>=2.2.1",
-    "asyncio-atexit>=1.0.1",
 ]
 classifiers = [
     "Development Status :: 1 - Planning",

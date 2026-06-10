@@ -50,6 +50,12 @@ class QueryExecutor:
 
     def _run_coroutine_threadsafe(self, coroutine):
         """Runs a coroutine on the executor's event loop and waits for the result."""
+        if threading.current_thread() is self._loop_thread:
+            # Blocking on the executor loop from its own thread would deadlock.
+            raise RuntimeError(
+                "The sync API cannot be used from the executor's event loop."
+                " Use the async API (e.g. execute_async or update_async) instead."
+            )
         return asyncio.run_coroutine_threadsafe(coroutine, self._loop).result()
 
     def _shutdown(self):

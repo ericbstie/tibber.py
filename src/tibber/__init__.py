@@ -1,4 +1,4 @@
-__version__ = "0.7.1"
+__version__ = "0.7.1"  # x-release-please-version
 DEMO_TOKEN = "3A77EECF61BD445F47241A5A36202185C35AF3AF58609E19B53F3A8872AD7BE1-1"
 API_ENDPOINT = "https://api.tibber.com/v1-beta/gql"
 

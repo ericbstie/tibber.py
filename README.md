@@ -33,7 +33,7 @@ python -m pip install tibber.py
 
 ### Requirements
 
-tibber.py depends on `gql`, `gql[aiohttp]`, `gql[websockets]`, `graphql-core`, `backoff` and `asyncio-atexit`. tibber.py supports Python versions 3.9 and up!
+tibber.py depends on `anyio>=4.14.2`, `gql`, `gql[aiohttp]`, `gql[websockets]`, `graphql-core`, `backoff` and `asyncio-atexit`. tibber.py supports Python versions 3.10 and up!
 
 ## Examples
 

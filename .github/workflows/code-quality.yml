@@ -14,16 +14,13 @@ jobs:
 
     steps:
       - uses: actions/checkout@v6
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
+      # Keep CI linting and formatting on the version recorded in uv.lock.
       - name: Lint and check import sorting
-        uses: astral-sh/ruff-action@v3
-        with:
-          args: check
-          src: "./src"
+        run: uv run --locked ruff check ./src
       - name: Check formatting
-        uses: astral-sh/ruff-action@v3
-        with:
-          args: format --check
-          src: "."
+        run: uv run --locked ruff format --check .
   tests:
     name: Pytest
     runs-on: ubuntu-latest

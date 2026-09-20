@@ -7,8 +7,10 @@ license = "MIT"
 authors = [
     { name = "Eric Bieszczad-Stie", email = "ericbieszczad@gmail.com" }
 ]
-requires-python = ">=3.9.0"
+requires-python = ">=3.10"
 dependencies = [
+    # Security floor for gql's transitive dependency: GHSA-82r6-8w77-94w6.
+    "anyio>=4.14.2",
     "gql==3.5.3",
     "gql[aiohttp]>=3.4.0",
     "gql[websockets]>=3.4.0",

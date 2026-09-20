@@ -1,6 +1,6 @@
 [project]
 name = "tibber.py"
-version = "0.8.0"
+version = "0.7.1"
 description = "A python wrapper for the Tibber API."
 readme = "README.md"
 license = "MIT"

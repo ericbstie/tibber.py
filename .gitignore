@@ -1,0 +1,10 @@
+__pycache__
+.*_cache
+.coverage
+coverage.xml
+build/*
+dist/*
+tibber.py.egg-info/*
+docs/_build
+.vscode
+test.py

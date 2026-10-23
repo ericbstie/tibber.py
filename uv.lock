@@ -868,9 +868,7 @@ requires-dist = [
     { name = "anyio", specifier = ">=4.14.2" },
     { name = "asyncio-atexit", specifier = ">=1.0.1" },
     { name = "backoff", specifier = ">=2.2.1" },
-    { name = "gql", specifier = "==3.5.3" },
-    { name = "gql", extras = ["aiohttp"], specifier = ">=3.4.0" },
-    { name = "gql", extras = ["websockets"], specifier = ">=3.4.0" },
+    { name = "gql", extras = ["aiohttp", "websockets"], specifier = ">=3.5.0,<4" },
     { name = "graphql-core", specifier = ">=3.2.3" },
 ]
 

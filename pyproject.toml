@@ -10,9 +10,7 @@ authors = [
 requires-python = ">=3.10"
 dependencies = [
     "anyio>=4.14.2",
-    "gql==3.5.3",
-    "gql[aiohttp]>=3.4.0",
-    "gql[websockets]>=3.4.0",
+    "gql[aiohttp,websockets]>=3.5.0,<4",
     "graphql-core>=3.2.3",
     "backoff>=2.2.1",
     "asyncio-atexit>=1.0.1",
